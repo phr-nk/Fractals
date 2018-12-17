@@ -1,2 +1,2 @@
 # Mandelbrot_set
-This is an implementation of the Mandelbrot set in java.
+This is an implementation of different fractal functions in java.
