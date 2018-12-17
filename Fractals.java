@@ -4,11 +4,11 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 
-public class Mandelbrot
+public class Fractals
 {
-    public static void main(String[] args) throws Exception
+    
+    public static void Mandelbrot(int width, int height, int max) throws Exception
     {
-        int width = 1000, height = 1000, max = 1500;
         BufferedImage image = new BufferedImage(width,height,BufferedImage.TYPE_INT_RGB);
         int black = 0;
         int[] colors = new int[max];
@@ -42,5 +42,11 @@ public class Mandelbrot
             }
         }
         ImageIO.write(image,"png",new File("mandelbrot.png"));
+
+    }
+    public static void main(String[] args) throws Exception
+    {
+        int width = 800, height = 800, max = 1500;
+        Mandelbrot(width,height,max);
     }
 }
