@@ -1,13 +1,83 @@
-import java.awt.Color;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import javax.swing.*;
 import java.io.File;
 import javax.imageio.ImageIO;
 
+/**
+ *
+ * @author Frank Lenoci
+ */
 
-public class Fractals
+class myGUI implements ActionListener
 {
+    private JFrame frame;
+    private JButton b1;
+    private JButton b2;
+    private Fractals new_fract = new Fractals();
+    public myGUI(int width, int height)
+    {
+        //creating frame
+        frame = new JFrame("Fractals");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(width,height);
+        //creating MenuBar
+        JMenuBar mb = new JMenuBar();
+        JMenu m1 = new JMenu("FILE");
+        JMenu m2 = new JMenu("Help");
+        mb.add(m1);
+        mb.add(m2);
+        JMenuItem m11 = new JMenuItem("Open");
+        JMenuItem m22 = new JMenuItem("Save as");
+        m1.add(m11);
+        m1.add(m22);
+        JPanel panel = new JPanel(); // the panel is not visible in output
+        JLabel label = new JLabel("Pick which Fractal to generate");
+        b1 = new JButton("Mandelbrot set");
+        b2 = new JButton("Julia set");
+        panel.add(label); // Components Added using Flow Layout
+       
+        b1.addActionListener(this);
+        b2.addActionListener(this);
+        panel.add(b1);
+        panel.add(b2);
+
     
-    public static void Mandelbrot(int w, int h, int max) throws Exception
+        
+        
+        frame.getContentPane().add(BorderLayout.CENTER, panel);
+        frame.getContentPane().add(BorderLayout.NORTH, mb);
+        frame.setVisible(true);
+    }
+    public void displayImage(ImageIcon ii)
+    {
+        JFrame new_f = new JFrame("output");
+        new_f.setSize(800,800);
+        JPanel np = new JPanel();
+        JLabel nl = new JLabel(ii);
+        np.add(nl);
+        new_f.getContentPane().add(BorderLayout.CENTER, np);
+        new_f.setVisible(true);
+    }
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        if(e.getSource() == b1)
+        {
+            displayImage(new_fract.Mandelbrot(800,800,1000));
+        }
+        else if(e.getSource() == b2)
+        {
+            displayImage(new_fract.JuliaSet(800,800,1000));
+        }
+       
+        
+    }
+}
+public class Fractals 
+{
+    public static ImageIcon Mandelbrot(int w, int h, int max)
     {
         BufferedImage image = new BufferedImage(w,h,BufferedImage.TYPE_INT_RGB);
         int black = 0;
@@ -41,13 +111,14 @@ public class Fractals
                 }
             }
         }
-        ImageIO.write(image,"png",new File("mandelbrot.png"));
+        ImageIcon ii = new ImageIcon(image);
+        return ii;
 
     }
-    public static void JuliaSet(int w, int h, int max) throws Exception
+    public static ImageIcon JuliaSet(int w, int h, int max)
     {
         int maxIter = max;
-        double zoom = 5;
+        double zoom = 1;
         double cY, cX;
         double moveX = 0, moveY = 0;
         double zx, zy;
@@ -69,13 +140,14 @@ public class Fractals
                 image.setRGB(x, y, c);
             }
         }
-        ImageIO.write(image,"png",new File("juliaset.png"));
+        ImageIcon ii = new ImageIcon(image);
+        return ii;
 
     }
+    
+
     public static void main(String[] args) throws Exception
     {
-        int width = 800, height = 800, max = 1500;
-        Mandelbrot(width,height,max);
-        JuliaSet(width,height,max);
+        new myGUI(500,500);
+        
     }
-}
