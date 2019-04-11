@@ -2,6 +2,8 @@
 
 This is an implementation of different fractal functions made in Java. This was a short porject whose main objective was to allow me to get some practice with the java swing library.
 
+MENU:
+![menuScreenshot](https://user-images.githubusercontent.com/28155935/55992555-7924e900-5c72-11e9-8a24-85569e74f41c.PNG)
 
 
 JULIA SET:
